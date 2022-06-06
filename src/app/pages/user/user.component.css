@@ -1,0 +1,94 @@
+.container-page{
+    width: 100vw;
+    background-color: white;
+}
+section{
+    padding:30px;
+}
+.table-container{
+    display: flex;
+    justify-content: center;
+    padding:35px;
+}
+.custom-table{
+    width: 820px;
+    background-color: rgb(245, 248, 252);
+}
+.credit-card-section{
+    background-color: rgb(245, 248, 252);
+    display: flex;
+    justify-content: space-evenly;
+    padding: 50px 50px;
+}
+.image-container{
+    width: 35%;
+    margin-right: 50px;
+}
+.image-container img{
+    width: 100%;
+}
+.description-container{
+    padding:70px 0;
+    width:50%;
+}
+.credit-card-btn{
+    float:right;
+    margin: 10px 50px;
+}
+.accounts-section{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 50px 50px;
+}
+.activities-section{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 50px 50px;
+    background-color:white;
+}
+.hero-section{
+    padding:20px;
+}
+.github-button{
+    width: 74px;
+    height: 74px;
+    margin: 0 10px;
+}
+.github-button:hover{
+    background-color:rgb(200, 200, 200);
+}
+.linkedin-button{
+    width: 74px;
+    height: 74px;
+    margin: 0 10px;
+}
+.linkedin-button:hover{
+    background-color:rgb(200, 200, 200);
+}
+.hero-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.card-container{
+    display: flex;
+    height: min-content;
+    justify-content: center;
+    align-items: center;
+}
+.cards-section{
+    background-color: rgb(245, 248, 252);
+    height: min-content;
+    padding:70px;
+}
+.white{
+    background-color:white;
+}
+.card-details-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top:20px;
+}

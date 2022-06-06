@@ -1,0 +1,24 @@
+
+<div class="container-page">
+    <h1 style="text-align:center">Emir Bank</h1>
+    <div class="card-container">
+        <p-card header="Login" [style]="{'width': '35rem', 'margin-bottom': '2em'}">
+            <ng-template pTemplate="header">
+            </ng-template>
+            
+            <h5>E-Mail</h5>
+            <input type="text" pInputText [(ngModel)]="email"> 
+        
+            <h5>Password</h5>
+            <input type="text" pInputText [(ngModel)]="password"> 
+        
+            <p *ngIf="showLoginFailedText" class="error-label">Invalid username or password</p>
+            <p *ngIf="userNotFound" class="error-label">No account</p>
+
+            <p-button (click)="submit()" [style]="{'width':'100%'}" label="Log in"></p-button>
+        
+        </p-card> 
+        
+    </div>
+    <p style="text-align:center">Don't have an account? <a routerLink="/sign-up">Register here</a> </p>
+</div>

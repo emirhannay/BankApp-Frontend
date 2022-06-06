@@ -1,0 +1,270 @@
+<div class="container-page">
+    <section class="hero-section">
+        <h1 style="text-align:center" class="m-5">
+            Welcome to Emir Bank
+        </h1>
+        <p style="text-align:center">This app is developed to introduce my backend api.</p>
+        <div class="hero-buttons">
+            <button (click)="navigate('https://github.com/emirhannay/BankApp')" class="btn btn-tertiary github-button">
+                <img src="assets/github-logo.png" width="48px" alt="">
+            </button>
+            <button (click)="navigate('https://www.linkedin.com/in/emirhan-ay/')" class="btn btn-tertiary github-button">
+                <img src="assets/linkedin-logo.png" width="58x" alt="">
+            </button>
+        </div>
+    </section>
+
+    <section class="credit-card-section">
+        <div class="image-container">
+            <img src="assets/credit-card.svg" style="max-width:480px">
+        </div>
+        <div class="description-container">
+            <h2>Credit Card</h2>
+            <p>You can apply for a credit card here easily!</p>
+            <div>
+                <button (click)="applyForCreditCard()" class="btn btn-primary credit-card-btn">Apply</button>
+            </div>
+            <p style="color:rgb(191, 20, 20)" *ngIf="creditCardInfoText != '' "> {{creditCardInfoText}} </p>
+        </div>
+    </section>
+
+    
+    <section class="accounts-section">
+        <h2 style="text-align:center;">My Accounts</h2>
+        <div *ngIf="accounts.length == 0">
+            <p style="text-align:center;margin-top:20px">No account found</p>
+            <p style="text-align:center"> To open a new account <a style="color:rgb(18, 111, 165);cursor:pointer" (click)="newAccountCard=true"> click here</a> </p>
+        </div>
+        <div *ngIf="newAccountCard" class="card-container">
+            <p-card header="New Account" [style]="{'width': '35rem', 'margin-bottom': '2em'}">
+                <ng-template pTemplate="header">
+                </ng-template>
+                
+                <h5>Choose Currency</h5>
+                <select [(ngModel)]="currency" pInputText style="width:100%">
+                    <option value="TRY">TL</option>
+                    <option value="EUR">EURO</option>
+                    <option value="USD">DOLLAR</option>
+                </select>
+                <h5 class="mt-2">Choose Type</h5>
+                <select [(ngModel)]="type" pInputText style="width:100%">
+                    <option value="drawing">Drawing</option>
+                    <option value="savings">Savings</option>
+                </select>
+                <p-button (click)="newAccount()" [style]="{'width':'100%','margin-top':'10px'}" label="Send"></p-button>
+            
+            </p-card> 
+        </div>
+
+        <div *ngIf="accounts.length > 0" class="table-container">
+            <table class="table custom-table p-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Iban</th>
+                        <th scope="col">Balance</th>
+                        <th scope="col">Type</th>
+                        <th> <button (click)="newAccountCard=!newAccountCard;" class="btn btn-secondary">&#43;</button> </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr  *ngFor="let account of accounts">
+                        <td></td>
+                        <td>{{account.iban}}</td>
+                        <td>{{account.balance}} {{account.currency}}</td>
+                        <td>{{account.accountType | titlecase}}</td>
+                        <td> <button (click)="getAccountActivity(account)" class="btn btn-primary">Show</button> </td> 
+                        <td> <button (click)="depositForm(account.savingsAccountId)" *ngIf="account.accountType=='SAVINGS'" class="btn btn-success">Deposit</button> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="showDepositForm" class="card-container" style="justify-content: space-evenly;">
+            
+            <p-card header="Deposit" [style]="{'width': '35rem', 'margin-bottom': '2em'}">
+                <ng-template pTemplate="header">
+                </ng-template>
+
+                <h5 class="mt-2">Amount</h5>
+                <input [(ngModel)]="deposit_amount" type="text" pInputText style="width:100%" placeholder="Amount">
+
+                <h5 class="mt-2">Month</h5>
+                <input [(ngModel)]="deposit_month" type="text" pInputText style="width:100%" placeholder="Month" >                
+
+                <p-button (click)="deposit()" [style]="{'width':'100%','margin-top':'25px'}" label="Send"></p-button>
+                <p style="color:rgb(192, 28, 28)">{{depositFormErrorText}}</p>
+            
+            </p-card> 
+        </div>
+    </section>
+
+
+    <section class="activities-section" *ngIf="this.activities">
+        <h2 style="text-align:center;">Account Activities</h2>
+        <p style="text-align:center" *ngIf="activities.length == 0">No account activity found.</p>
+        <div *ngIf="activities.length > 0" class="table-container">
+            <table class="table custom-table p-5">
+                <thead>
+                    <tr *ngIf="selectedAccount.accountType=='DRAWING'">
+                        <th scope="col">#</th>
+                        <th scope="col">Sender</th>
+                        <th scope="col">Receiver</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                    <tr *ngIf="selectedAccount.accountType=='SAVINGS'">
+                        <th scope="col">#</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Month</th>
+                        <th scope="col">Money With Interest</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="selectedAccount.accountType.toUpperCase()=='SAVINGS'">
+                        <tr *ngFor="let activity of activities">
+                            <td></td>
+                            <td> {{activity.amount}} </td>
+                            <td>{{activity.month}}</td>
+                            <td>{{activity.moneyWitInterest}}</td>
+                            <td>{{activity.startDate}}</td>
+                            <td>{{activity.endDate}}</td>
+                        </tr>
+                    </ng-container>
+
+                    <ng-container *ngIf="selectedAccount.accountType.toUpperCase()=='DRAWING'">
+                        <tr *ngFor="let activity of activities">
+                            <td></td>
+                            <td> {{selectedAccount.iban}} </td>
+                            <td>{{activity.iban}}</td>
+                            <td>{{activity.amount}} {{activity.currency}}</td>
+                        </tr>
+                    </ng-container>
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="cards-section">
+        <h2 style="text-align:center;padding-top:50px">Cards</h2>
+        <p style="text-align:center;" *ngIf="cards.length==0">No cards</p>
+        <div *ngIf="cards.length>0" class="table-container">
+            <table class="table custom-table p-5 white">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Card No</th>
+                        <th scope="col">Exp. Date</th>
+                        <th scope="col">CVV</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let card of cards">
+                        <td></td>
+                        <td>{{card.cardNo}}</td>
+                        <td>{{card.expirationDate}}</td>
+                        <td>{{card.cvv}}</td>
+                        <td>{{card.cardType}}</td>
+                        <td> <button (click)="getCardDetails(card)" *ngIf="card.cardType!='BANK'" class="btn btn-primary">Show</button> </td>
+                        <td> <button (click)="payForm(card.cardNo,card.cvv)" class="btn btn-secondary">Pay</button> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="showPayForm" class="card-container" style="justify-content: space-evenly;">
+            
+            <p-card header="Pay" [style]="{'width': '35rem', 'margin-bottom': '2em'}">
+                <ng-template pTemplate="header">
+                </ng-template>
+
+                <h5 class="mt-2">Amount</h5>
+                <input [(ngModel)]="pay_amount" type="text" pInputText style="width:100%" placeholder="Amount">
+
+                <h5 class="mt-2">Firm</h5>
+                <select pInputText [(ngModel)]="selected_firm" style="width:100%">
+                    <option *ngFor="let firm of firms" value="{{firm.iban}}">{{firm.name}}</option>
+                </select>
+
+                <p-button (click)="pay()" [style]="{'width':'100%','margin-top':'25px'}" label="Pay"></p-button>
+                <p style="color:rgb(192, 28, 28)">{{payFormErrorText}}</p>
+                <p style="color:rgb(28, 192, 53)">{{paySuccessText}}</p>
+            
+            </p-card> 
+        </div>
+        <div *ngIf="cardDetails != null" class="card-details-container">
+            <div class="">
+                <h5>{{cardDetails.cardNo}} Numbered Card Information</h5>
+                <img src="assets/credit-card-info.svg" style="max-width:350px; padding: 70px 0;">
+            </div>
+            <div>
+                <p> <b>Available Limit:</b> {{cardDetails.availableLimit}} </p>
+                <p> <b>Total Limit:</b>  {{cardDetails.cardLimit}} </p>
+                <p> <b>Debt:</b>  {{cardDetails.currentDebt}} </p>
+                <p> <b>Last Outstanding Balance:</b>  {{cardDetails.lastOutstandingBalance}} </p>
+                <p> <b>Cut off date:</b>  {{cardDetails.cutoffDate}} </p>
+                <p> <b>Next cut off date:</b>  {{cardDetails.nextCutoffDate}} </p>
+                <p> <b>Next payment due date:</b>  {{cardDetails.nextPaymentDueDate}} </p>
+                <p> <b>Payment due date:</b> {{cardDetails.paymentDueDate}} </p>
+            </div>
+        </div>
+        <div *ngIf="cardActivity.length > 0" class="table-container">
+            <table class="table custom-table p-5">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Shop</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let activity of cardActivity">
+                        <td></td>
+                        <td> {{activity.shop}} </td>
+                        <td>{{activity.amount}} {{activity.currency}}</td>
+                        <td>{{activity.paymentDate | date}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section *ngIf="accounts.length > 0">
+        <h2 style="text-align:center">Money Transfer</h2>
+        <div class="card-container" style="justify-content: space-evenly;">
+            
+            <p-card header="Transfer" [style]="{'width': '35rem', 'margin-bottom': '2em'}">
+                <ng-template pTemplate="header">
+                </ng-template>
+                
+                <h5 class="mt-2">Choose Account</h5>
+                <select pInputText style="width:100%" [(ngModel)]="sender">
+                    <ng-container *ngFor="let account of accounts" >
+                        <option *ngIf="account.accountType == 'DRAWING'" [value]="account.iban">{{account.iban}}</option>    
+                    </ng-container>
+                </select> 
+
+                <h5 class="mt-2">Iban</h5>
+                <input [(ngModel)]="receiver" type="text" pInputText style="width:100%" placeholder="Receiver iban" >
+
+                <h5 class="mt-2">Amount</h5>
+                <input [(ngModel)]="amount" type="text" pInputText style="width:100%" placeholder="Amount" >
+
+                <h5 class="mt-2">Description</h5>
+                <input [(ngModel)]="description" type="text" pInputText style="width:100%" placeholder="Description" >                
+
+                <p-button (click)="sendMoney()" [style]="{'width':'100%','margin-top':'25px'}" label="Send"></p-button>
+                <p style="color:rgb(192, 28, 28)">{{sendMoneyErrorText}}</p>
+            
+            </p-card> 
+        </div>
+
+    </section>
+
+</div>

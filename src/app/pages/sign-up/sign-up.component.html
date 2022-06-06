@@ -1,0 +1,33 @@
+
+<div class="container-page">
+    <h1>Emir Bank</h1>
+    <div class="card-container">
+        <p-card header="Register" [style]="{'width': '35rem', 'margin-bottom': '2em'}">
+            <ng-template pTemplate="header">
+            </ng-template>
+            
+            <h5>E-mail</h5>
+            <input type="text" pInputText [(ngModel)]="email"> 
+
+            <h5>Name</h5>
+            <input type="text" pInputText [(ngModel)]="name"> 
+        
+            <h5>Password</h5>
+            <input type="text" pInputText [(ngModel)]="password"> 
+
+            <h5>Identity Number</h5>
+            <input type="text" pInputText [(ngModel)]="identityNo"> 
+
+            <h5>Phone Number</h5>
+            <input type="text" pInputText [(ngModel)]="phoneNumber"> 
+
+            <h5>Monthly Earning</h5>
+            <input type="number" pInputText [(ngModel)]="monthlyEarning"> 
+        
+            <p *ngIf="showRegisterFailedText" class="error-label">{{ errorMessage }}</p>
+
+            <p-button (click)="submit()" [style]="{'width':'100%'}" label="Register"></p-button>
+        
+        </p-card> 
+    </div>
+</div>

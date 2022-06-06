@@ -1,0 +1,7 @@
+.all-customers-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:50px;
+    height: 580px;
+}

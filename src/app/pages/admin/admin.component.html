@@ -1,0 +1,57 @@
+
+<div class="all-customers-section">
+    <h2 style="text-align:center" class="mt-2 mb-3">All customers</h2>
+
+    <div *ngIf="users.length > 0" class="table-container">
+        <table class="table custom-table p-5">
+            <thead>
+                <tr>
+                    <th scope="col">Customer Id</th>
+                    <th scope="col">User Id</th>
+                    <th scope="col">Identity No</th>
+                    <th scope="col">Monthly Earning</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">User Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.customerId}}</td>
+                    <td>{{user.userId}}</td>
+                    <td>{{user.identityNo}}</td>
+                    <td>{{user.monthlyEarning}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.phoneNumber}}</td>
+                    <td>{{user.userType}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="all-customers-section">
+    <h2 style="text-align:center" class="mt-2 mb-3">All accounts</h2>
+
+    <div *ngIf="accounts.length > 0" class="table-container">
+        <table class="table custom-table p-5">
+            <thead>
+                <tr>
+                    <th scope="col">Account Type</th>
+                    <th scope="col">Iban</th>
+                    <th scope="col">Balance</th>
+                    <th scope="col">Currency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let account of accounts">
+                    <td>{{account.accountType}}</td>
+                    <td>{{account.iban}}</td>
+                    <td>{{account.balance}}</td>
+                    <td>{{account.currency}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

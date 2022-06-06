@@ -1,0 +1,36 @@
+#background{
+    background-color: rgb(46,40,52);
+    width: 100%;
+    height: 100%;
+}
+h5{
+    margin-bottom:5px;
+    margin-top:10px;
+}
+input{
+    width: 100%;
+    margin-bottom:10px;
+}
+.card-container{
+    display: flex;
+    height: min-content;
+    justify-content: center;
+    align-items: center;
+}
+.container-page{
+    height: 100vh;
+    background-color: rgb(245, 248, 252);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+h1{
+    font-size:250%;
+    color:#3f3f3f;
+    padding-bottom:25px;
+}
+.error-label{
+    color:rgb(195, 28, 28);
+    margin: 10px 0px;
+}
