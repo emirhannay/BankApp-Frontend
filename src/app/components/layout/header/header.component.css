@@ -4,6 +4,7 @@
     height: 6vh;
     background-color:rgb(57, 53, 145);
     padding: 6px 10px;
+    justify-content: space-between;
 }
 #header-custom h2{
     color: rgb(244, 244, 244);
